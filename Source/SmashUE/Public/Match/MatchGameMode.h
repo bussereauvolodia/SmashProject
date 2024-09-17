@@ -6,7 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "MatchGameMode.generated.h"
 
-class AASmashCharacter;
+class ASmashCharacter;
 class AArenaPlayerStart;
 
 /**
@@ -21,24 +21,24 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere)
-	TArray<AASmashCharacter*> CharactersInsideArena;
+	TArray<ASmashCharacter*> CharactersInsideArena;
 	
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AASmashCharacter> SmashCharacterClassP0;
+	TSubclassOf<ASmashCharacter> SmashCharacterClassP0;
 	
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AASmashCharacter> SmashCharacterClassP1;
+	TSubclassOf<ASmashCharacter> SmashCharacterClassP1;
 	
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AASmashCharacter> SmashCharacterClassP2;
+	TSubclassOf<ASmashCharacter> SmashCharacterClassP2;
 	
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AASmashCharacter> SmashCharacterClassP3;
+	TSubclassOf<ASmashCharacter> SmashCharacterClassP3;
 
 private:
 	void FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& ResultsActors);
 
 	void SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints);
 
-	TSubclassOf<AASmashCharacter> GetSmashCharacterClassFromInputType(EAutoReceiveInput::Type InputType) const;
+	TSubclassOf<ASmashCharacter> GetSmashCharacterClassFromInputType(EAutoReceiveInput::Type InputType) const;
 };

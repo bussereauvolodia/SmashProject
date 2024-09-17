@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "ASmashCharacter.generated.h"
+#include "SmashCharacter.generated.h"
 
 UCLASS()
-class SMASHUE_API AASmashCharacter : public ACharacter
+class SMASHUE_API ASmashCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -15,7 +15,7 @@ class SMASHUE_API AASmashCharacter : public ACharacter
 	
 public:
 	// Sets default values for this character's properties
-	AASmashCharacter();
+	ASmashCharacter();
 
 protected:
 	// Called when the game starts or when spawned
