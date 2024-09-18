@@ -69,3 +69,9 @@ void ASmashCharacter::TickStateMachine(float DeltaTime) const
 	StateMachine->Tick(DeltaTime);
 }
 
+void ASmashCharacter::AnimateStateMachine(UAnimMontage* Anim)
+{
+	if (Anim == nullptr) return;
+	PlayAnimMontage(Anim, 1.f);
+}
+

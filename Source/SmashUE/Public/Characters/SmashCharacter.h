@@ -53,6 +53,9 @@ public:
 	void InitStateMachine();
 
 	void TickStateMachine(float DeltaTime) const;
+	
+	void AnimateStateMachine(UAnimMontage* Anim);
+
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
