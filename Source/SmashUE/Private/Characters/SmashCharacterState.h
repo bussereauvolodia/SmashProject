@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Characters/SmashCharacterSettings.h"
 #include "Characters/SmashCharacterStateID.h"
 #include "Components/ActorComponent.h"
 #include "SmashCharacterState.generated.h"
@@ -39,4 +40,7 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAnimMontage> StateAnim;
+
+	UPROPERTY()
+	const USmashCharacterSettings* CharacterSettings;
 };
