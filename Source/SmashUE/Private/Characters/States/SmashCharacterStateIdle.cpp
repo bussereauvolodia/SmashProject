@@ -3,6 +3,8 @@
 
 #include "Characters/States/SmashCharacterStateIdle.h"
 
+#include "GeometryCollection/GeometryCollectionParticlesData.h"
+
 ESmashCharacterStateID USmashCharacterStateIdle::GetStateID()
 {
 	return ESmashCharacterStateID::Idle;
@@ -29,6 +31,18 @@ void USmashCharacterStateIdle::StateExit(ESmashCharacterStateID NextStateID)
 		3.f,
 		FColor::Red,
 		TEXT("Exit StateIdle")
+		);
+}
+
+void USmashCharacterStateIdle::StateTick(float DeltaTime)
+{
+	Super::StateTick(DeltaTime);
+
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		3.f,
+		FColor::Green,
+		TEXT("Tick StateIdle")
 		);
 }
 
