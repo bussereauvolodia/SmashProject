@@ -53,7 +53,7 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 		TSubclassOf<ASmashCharacter> SmashCharacterClass = GetSmashCharacterClassFromInputType(InputType);
 		if (SmashCharacterClass == nullptr) continue;
 
-		ASmashCharacter* NewCharacter = GetWorld()->SpawnActor<ASmashCharacter>(
+		ASmashCharacter* NewCharacter = GetWorld()->SpawnActorDeferred<ASmashCharacter>(
 			SmashCharacterClass,
 			SpawnPoint->GetTransform()
 			);
