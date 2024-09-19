@@ -21,6 +21,9 @@ public:
 
 	virtual void StateTick(float DeltaTime) override;
 
+	UFUNCTION()
+	void OnInputMoveXFast(float InputMoveX);
+
 protected:
 	UPROPERTY(EditAnywhere)
 	float MaxWalkSpeed;
