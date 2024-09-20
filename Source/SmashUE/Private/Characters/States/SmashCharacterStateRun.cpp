@@ -60,5 +60,10 @@ void USmashCharacterStateRun::StateTick(float DeltaTime)
 		StateMachine->ChangeState(ESmashCharacterStateID::Jump);
 	}
 
+	if (Character->GetVelocity().Z < 0.f)
+	{
+		StateMachine->ChangeState(ESmashCharacterStateID::Fall);
+	}
+
 }
 

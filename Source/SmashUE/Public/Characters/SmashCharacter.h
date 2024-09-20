@@ -122,4 +122,22 @@ private:
 
 #pragma endregion
 
+#pragma region Input FallFast
+
+public:
+	bool GetInputFallFast() const;
+	
+protected:
+	UPROPERTY()
+	bool InputFallFastValue;
+
+private:
+	
+	void BindInputFallFastActions(UEnhancedInputComponent* EnhancedInputComponent);
+
+	void OnInputFallFast(const FInputActionValue& InputActionValue);
+
+#pragma endregion
+	
+
 };

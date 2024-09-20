@@ -16,13 +16,6 @@ void USmashCharacterStateFall::StateEnter(ESmashCharacterStateID PreviousStateID
 {
 	Super::StateEnter(PreviousStateID);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Purple,
-		TEXT("Fallllllll")
-		);
-
 	Character->GetCharacterMovement()->GravityScale = FallGravityScale;
 }
 
@@ -38,6 +31,15 @@ void USmashCharacterStateFall::StateTick(float DeltaTime)
 	if (Character->GetCharacterMovement()->IsMovingOnGround())
 	{
 		StateMachine->ChangeState(ESmashCharacterStateID::Idle);
+	}
+
+	if (Character->GetInputFallFast() && Character->GetCharacterMovement()->GravityScale != FallFastGravityScale)
+	{
+		Character->GetCharacterMovement()->GravityScale = FallFastGravityScale;
+	}
+	else if (!Character->GetInputFallFast() && Character->GetCharacterMovement()->GravityScale == FallFastGravityScale)
+	{
+		Character->GetCharacterMovement()->GravityScale = FallGravityScale;
 	}
 
 	if (FMath::Abs(Character->GetInputMoveX()) > CharacterSettings->InputMoveXThreshold)

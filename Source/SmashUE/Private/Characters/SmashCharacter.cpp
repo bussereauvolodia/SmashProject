@@ -45,6 +45,8 @@ void ASmashCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	BindInputMoveXAxisAndActions(EnhancedInputComponent);
 
 	BindInputJumpActions(EnhancedInputComponent);
+
+	BindInputFallFastActions(EnhancedInputComponent);
 }
 
 float ASmashCharacter::GetOrientX() const
@@ -156,6 +158,7 @@ void ASmashCharacter::OnInputMoveXFast(const FInputActionValue& InputActionValue
 	InputMoveXFastEvent.Broadcast(InputMoveX);
 }
 
+#pragma region Input Jump
 
 bool ASmashCharacter::GetInputJump() const
 {
@@ -189,6 +192,43 @@ void ASmashCharacter::BindInputJumpActions(UEnhancedInputComponent* EnhancedInpu
 void ASmashCharacter::OnInputJump(const FInputActionValue& InputActionValue)
 {
 	InputJumpValue = InputActionValue.Get<bool>();
+}
+
+#pragma region Input FallFast
+
+bool ASmashCharacter::GetInputFallFast() const
+{
+	return InputFallFastValue;
+}
+
+#pragma endregion
+
+void ASmashCharacter::BindInputFallFastActions(UEnhancedInputComponent* EnhancedInputComponent)
+{
+	if (InputData == nullptr) return; 
+
+	if (InputData->InputActionFallFast)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionFallFast,
+			ETriggerEvent::Triggered,
+			this,
+			&ASmashCharacter::OnInputFallFast
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionFallFast,
+			ETriggerEvent::Completed,
+			this,
+			&ASmashCharacter::OnInputFallFast
+			);
+		
+	}
+}
+
+void ASmashCharacter::OnInputFallFast(const FInputActionValue& InputActionValue)
+{
+	InputFallFastValue = InputActionValue.Get<bool>();
 }
 
 
