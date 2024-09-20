@@ -43,6 +43,8 @@ void ASmashCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	if (EnhancedInputComponent == nullptr) return;
 
 	BindInputMoveXAxisAndActions(EnhancedInputComponent);
+
+	BindInputJumpActions(EnhancedInputComponent);
 }
 
 float ASmashCharacter::GetOrientX() const
@@ -153,4 +155,41 @@ void ASmashCharacter::OnInputMoveXFast(const FInputActionValue& InputActionValue
 	InputMoveX = InputActionValue.Get<float>();
 	InputMoveXFastEvent.Broadcast(InputMoveX);
 }
+
+
+bool ASmashCharacter::GetInputJump() const
+{
+	return InputJumpValue;
+}
+
+void ASmashCharacter::BindInputJumpActions(UEnhancedInputComponent* EnhancedInputComponent)
+{
+	if (InputData == nullptr) return;
+
+	if (InputData->InputActionJump)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionJump,
+			ETriggerEvent::Triggered,
+			this,
+			&ASmashCharacter::OnInputJump
+			);
+
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionJump,
+			ETriggerEvent::Completed,
+			this,
+			&ASmashCharacter::OnInputJump);
+		
+	}
+
+	
+}
+
+void ASmashCharacter::OnInputJump(const FInputActionValue& InputActionValue)
+{
+	InputJumpValue = InputActionValue.Get<bool>();
+}
+
+
 

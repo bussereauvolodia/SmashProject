@@ -42,6 +42,11 @@ void USmashCharacterStateWalk::StateTick(float DeltaTime)
 		Character->AddMovementInput(FVector::ForwardVector, Character->GetOrientX());
 	}
 
+	if (Character->GetInputJump())
+	{
+		StateMachine->ChangeState(ESmashCharacterStateID::Jump);
+	}
+
 	/*
 	GEngine->AddOnScreenDebugMessage(
 		-1,

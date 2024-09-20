@@ -101,6 +101,25 @@ private:
 
 	void OnInputMoveXFast(const FInputActionValue& InputActionValue);
 	
+	
+#pragma endregion
+
+#pragma region Input Jump
+
+public:
+	bool GetInputJump() const;
+	
+protected:
+	UPROPERTY()
+	bool InputJumpValue;
+
+private:
+	
+	void BindInputJumpActions(UEnhancedInputComponent* EnhancedInputComponent);
+
+	void OnInputJump(const FInputActionValue& InputActionValue);
+
+
 #pragma endregion
 
 };
