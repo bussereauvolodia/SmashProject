@@ -42,7 +42,10 @@ protected:
 	UPROPERTY()
 	TObjectPtr<USmashCharacterState> CurrentState;
 
-	void FindStates();
+	UPROPERTY()
+	TArray<ESmashCharacterStateID> PossibleStatesID;
+
+	void CreateStates();
 
 	void InitStates();
 };

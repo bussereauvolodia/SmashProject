@@ -7,6 +7,8 @@
 #include "SmashCharacterInputData.h"
 #include "SmashCharacterSettings.generated.h"
 
+enum class ESmashCharacterStateID : uint8;
+class USmashCharacterState;
 class UInputMappingContext;
 class USmashCharacterInputData;
 /**
@@ -18,6 +20,12 @@ class SMASHUE_API USmashCharacterSettings : public UDeveloperSettings
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(Config, EditAnywhere, Category="States")
+	TArray<ESmashCharacterStateID> PossibleStates;
+	
+	UPROPERTY(Config, EditAnywhere, Category="States")
+	TMap<ESmashCharacterStateID, TSubclassOf<USmashCharacterState>> SmashCharacterStates;
+	
 	UPROPERTY(Config, EditAnywhere, Category="Inputs")
 	TSoftObjectPtr<USmashCharacterInputData> InputData;
 

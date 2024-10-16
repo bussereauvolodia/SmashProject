@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "SmashCharacter.generated.h"
 
+enum class ESmashCharacterStateID : uint8;
+class USmashCharacterState;
 class USmashCharacterInputData;
 class UInputMappingContext;
 class USmashCharacterStateMachine;
@@ -49,8 +51,11 @@ protected:
 #pragma endregion
 
 #pragma region State Machine
-	
+
 public:
+	UPROPERTY(EditAnywhere)
+	TMap<ESmashCharacterStateID, TSubclassOf<USmashCharacterState>> SmashCharacterStatesOverride;
+	
 	void CreateStateMachine();
 
 	void InitStateMachine();

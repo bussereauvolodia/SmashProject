@@ -5,15 +5,14 @@
 #include "CoreMinimal.h"
 #include "Characters/SmashCharacterSettings.h"
 #include "Characters/SmashCharacterStateID.h"
-#include "Components/ActorComponent.h"
 #include "SmashCharacterState.generated.h"
 
 
 class USmashCharacterStateMachine;
 class ASmashCharacter;
 
-UCLASS(Abstract)
-class SMASHUE_API USmashCharacterState : public UActorComponent
+UCLASS(Abstract, Blueprintable)
+class SMASHUE_API USmashCharacterState : public UObject
 {
 	GENERATED_BODY()
 

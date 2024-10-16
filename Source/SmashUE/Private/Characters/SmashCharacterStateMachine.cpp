@@ -9,7 +9,7 @@
 void USmashCharacterStateMachine::Init(ASmashCharacter* InCharacter)
 {
 	Character = InCharacter;
-	FindStates();
+	CreateStates();
 	InitStates();
 
 	ChangeState(ESmashCharacterStateID::Idle);
@@ -60,16 +60,25 @@ USmashCharacterState* USmashCharacterStateMachine::GetState(ESmashCharacterState
 	return nullptr;
 }
 
-void USmashCharacterStateMachine::FindStates()
+void USmashCharacterStateMachine::CreateStates()
 {
-	TArray<UActorComponent*> FoundComponents = Character->K2_GetComponentsByClass(USmashCharacterState::StaticClass());
-	for (UActorComponent* StateComponent : FoundComponents)
+	const USmashCharacterSettings* SmashCharacterSettings = GetDefault<USmashCharacterSettings>();
+	TMap<ESmashCharacterStateID, TSubclassOf<USmashCharacterState>> StatesFromSettings = SmashCharacterSettings->SmashCharacterStates;
+	TMap<ESmashCharacterStateID, TSubclassOf<USmashCharacterState>> StatesOverrides = Character->SmashCharacterStatesOverride;
+	
+	for (TTuple<ESmashCharacterStateID, TSubclassOf<USmashCharacterState>> StateFromSetting : StatesFromSettings)
 	{
-		USmashCharacterState* State = Cast<USmashCharacterState>(StateComponent);
+		if (StateFromSetting.Key == ESmashCharacterStateID::None) continue;
+		
+		TSubclassOf<USmashCharacterState>* State;
+		
+		if (StatesOverrides.Contains(StateFromSetting.Key)) State = &StatesOverrides[StateFromSetting.Key];
+		else State = &StateFromSetting.Value;
+		
 		if (State == nullptr) continue;
-		if (State->GetStateID() == ESmashCharacterStateID::None) continue;
 
-		AllStates.Add(State);
+		USmashCharacterState* StateObject = NewObject<USmashCharacterState>(this, *State);
+		AllStates.Add(StateObject);
 	}
 }
 
