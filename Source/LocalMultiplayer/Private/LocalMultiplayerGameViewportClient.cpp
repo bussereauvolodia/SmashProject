@@ -58,7 +58,7 @@ bool ULocalMultiplayerGameViewportClient::InputKey(const FInputKeyEventArgs& Eve
 
 	if (PlayerIndex != -1)
 	{
-		UGameplayStatics::GetPlayerController(GetGameInstance()->GetWorld(), PlayerIndex)->InputKey(EventArgs.Key,
+		return UGameplayStatics::GetPlayerController(GetGameInstance()->GetWorld(), PlayerIndex)->InputKey(EventArgs.Key,
 					EventArgs.Event, EventArgs.AmountDepressed, EventArgs.IsGamepad());
 	}
 	return Super::InputKey(EventArgs);
@@ -85,7 +85,7 @@ bool ULocalMultiplayerGameViewportClient::InputAxis(FViewport* InViewport, FInpu
 
 	if (PlayerIndex != -1)
 	{
-		UGameplayStatics::GetPlayerController(GetGameInstance()->GetWorld(), PlayerIndex)->InputAxis(Key, Delta, DeltaTime, NumSamples, bGamepad);
+		return UGameplayStatics::GetPlayerController(GetGameInstance()->GetWorld(), PlayerIndex)->InputAxis(Key, Delta, DeltaTime, NumSamples, bGamepad);
 	}
 	
 	return Super::InputAxis(Viewport, InputDevice, Key, Delta, DeltaTime, NumSamples, bGamepad);
