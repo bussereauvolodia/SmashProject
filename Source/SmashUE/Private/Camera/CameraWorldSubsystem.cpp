@@ -4,6 +4,7 @@
 #include "Camera/CameraWorldSubsystem.h"
 
 #include "Camera/CameraComponent.h"
+#include "Camera/CameraFollowTarget.h"
 #include "Kismet/GameplayStatics.h"
 
 void UCameraWorldSubsystem::PostInitialize()
@@ -23,13 +24,13 @@ void UCameraWorldSubsystem::Tick(float DeltaTime)
 	if (CameraMain != nullptr) TickUpdateCameraPosition(DeltaTime);
 }
 
-void UCameraWorldSubsystem::AddFollowTarget(AActor* FollowTarget)
+void UCameraWorldSubsystem::AddFollowTarget(UObject* FollowTarget)
 {
 	if (FollowTargets.Contains(FollowTarget) || FollowTarget == nullptr) return;
 	FollowTargets.Add(FollowTarget);
 }
 
-void UCameraWorldSubsystem::RemoveFollowTarget(AActor* FollowTarget)
+void UCameraWorldSubsystem::RemoveFollowTarget(UObject* FollowTarget)
 {
 	if (!FollowTargets.Contains(FollowTarget) || FollowTarget == nullptr) return;
 	FollowTargets.Remove(FollowTarget);
@@ -45,11 +46,13 @@ void UCameraWorldSubsystem::TickUpdateCameraPosition(float DeltaTime)
 FVector UCameraWorldSubsystem::CalculateAveragePositionBetweenTargets()
 {
 	FVector SumPositions = FVector::ZeroVector;
-	for (AActor* FollowTarget : FollowTargets)
+	for (UObject* FollowTarget : FollowTargets)
 	{
-		SumPositions += FollowTarget->GetActorLocation();
+		TScriptInterface<ICameraFollowTarget> FollowTargetInterface = FollowTarget;
+		if (FollowTargetInterface == nullptr || !FollowTargetInterface->isFollowable()) continue;
+		SumPositions += FollowTargetInterface->GetFollowPosition();
 	}
-	if (FollowTargets.Num() <= 0) return FVector::ZeroVector;
+	if (FollowTargets.Num() <= 0) return CameraMain->GetComponentLocation();
 	return SumPositions / FollowTargets.Num();
 }
 
